@@ -5,7 +5,7 @@ const errorMiddlware = (err, req, res, next) => {
 
         error.message = err.message
 
-        consoler.error(err)
+        console.error(err)
 
         //mongoose bad objectid
         if (err.name === 'CastError') {
@@ -22,7 +22,7 @@ const errorMiddlware = (err, req, res, next) => {
 
         }
 
-        if (err.name = 'Validation Error') {
+        if (err.name === 'Validation Error') {
             const message = Object.values(err.errors).map(val => val.message)
             error = new Error(message.join(', '))
             error.statusCode = 400
@@ -36,3 +36,12 @@ const errorMiddlware = (err, req, res, next) => {
 
 }
 export default errorMiddlware;
+
+
+// catch (error) {
+//         console.error('Error in error middleware:', error)
+//         res.status(500).json({ 
+//             success: false, 
+//             message: 'Internal server error' 
+//         })
+//     }
