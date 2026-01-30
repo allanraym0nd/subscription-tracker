@@ -7,6 +7,7 @@ import connectToDatabase from './database/mongodb.js'
 import errorMiddlware from './middleware/error.middleware.js'
 import cookieParser from 'cookie-parser'
 import arcJetMiddleware from './middleware/arcjet.middleware.js'
+import workFlowRouter from './routes/workflow.routes.js'
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/subscriptions', subscriptionRoutes)
+app.use("/api/v1/workflows", workFlowRouter)
 
 app.use(errorMiddlware)
 
