@@ -18,18 +18,18 @@ export const sendReminders = serve(async (context) => {
         return;
     }
 
-    for (const daysBefore in REMINDERS) {
+    for (const daysBefore of REMINDERS) {
         const reminderDate = renewalDate.subtract(daysBefore, 'day')
         if (reminderDate.isBefore(dayjs())) {
-            // Schedule reminder
-            await sleepUntilReminder(context, `Reminder ${daysBefore} days before`, reminderDate)
+            console.log(`Skipping ${daysBefore} day reminder - already passed`)
+            continue
         }
+        // Sleep until reminder date
+        await sleepUntilReminder(context, `Reminder ${daysBefore} days before`, reminderDate)
 
         if (dayjs.isSame(reminderDate, 'day')) {
             await triggerReminder(context, `${daysBefore} days before reminder`, subscription)
         }
-
-        await triggerReminder(context, `${daysBefore} days before reminder`, subscription)
     }
 
 
